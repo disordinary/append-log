@@ -1,2 +1,2 @@
 # append_log
-append only log for node
+append only log for todb
