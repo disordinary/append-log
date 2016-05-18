@@ -5,7 +5,7 @@ const byte_size_pad = Array(max_doc_size).fill().reduce(prev => prev = (prev || 
 
 var split = require('split');
 
-const record_seperator = String.fromCharCode( 36 ); //record seperator ascii
+const record_seperator = String.fromCharCode( 30 ); //record seperator ascii
 
 class AppendLog {
 	constructor( file , cb ) {
@@ -34,13 +34,15 @@ class AppendLog {
 
 	write( output , cb ) {
 		this.write_buffer.push( { data : output , cb : cb } );
-		this._write( ); 
+		process.nextTick( this._write.bind( this ) );
 	}
 
 	_write(  ) {
 		if( this.locked || !this.write_buffer.length ) {
 			return;
 		}
+
+		this.locked = true;
 
 		let toWrite = this.write_buffer.shift();
 
@@ -50,7 +52,8 @@ class AppendLog {
 			this.size += buf.byteLength;
         	toWrite.cb( err );
         	this.locked = false;
-        	this._write;
+        	process.nextTick( this._write.bind( this ) );
+        	
         });
 	}
 }
