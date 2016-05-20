@@ -27,7 +27,7 @@ class AppendLog {
 		});
 	}
 
-	readStream( ) {
+	toStream( ) {
 		var s = fs.createReadStream(this.file); //{ fd : this._fd } doesn't work
 		return s.pipe( split( record_seperator ));
 	}

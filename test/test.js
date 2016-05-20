@@ -21,7 +21,7 @@ describe( "The append log returns records in the same order as inserted." , ( ) 
 					yield log.write( test , next );
 				}
 				
-				var read = log.readStream();
+				var read = log.toStream();
 				read.on('data' , ( chunk ) => {
 					if( chunk ) {
 						test_return.push( chunk );
