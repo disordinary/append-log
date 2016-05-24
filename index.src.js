@@ -56,6 +56,9 @@ class AppendLog {
         	
         });
 	}
+	close( ) {
+		fs.close( this._fd );
+	}
 }
 
 module.exports = AppendLog;
