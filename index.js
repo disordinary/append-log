@@ -55,6 +55,9 @@ class AppendLog {
 			process.nextTick(this._write.bind(this));
 		});
 	}
+	close() {
+		fs.close(this._fd);
+	}
 }
 
 module.exports = AppendLog;
